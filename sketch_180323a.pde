@@ -1,116 +1,86 @@
-float r = 100;
+float r = 100; //sun radius
 float x,y;
-float ji=0;
-float jm=0;
-float je=0;
-float jv=0;
-float jme=0;
-float js=0;
-float ju=0;
-float jn=0;
-float jp=0;
-
+float ji=0,jm=0,je=0,jv=0,jme=0,js=0,ju=0,jn=0,jp=0; //start speed each planet
+float[] orbit_radius = {r+4,r+8,r+10,r+16,r+52,r+100,r+200,r+300,r+400}; //orbit radius 
+float[] speed = {0.050,0.035,0.03,0.024,0.013,0.0096,0.0068,0.0054,0.0046}; //planet speed 
+float[] planet_radius = {0.3, 0.8, 1, 0.4, 10.2, 8.3, 3.3, 3.2, 0.1}; //planet radius
+int i,j,k,s,a,p;
+ 
 void setup(){
-   size(1280,720);
-   x=width/2;
-   y=height/2;
+   size(1280,720); 
+   x=width/2; //center x
+   y=height/2; //center y
    ellipseMode(RADIUS);
    background(0,0,0);
    noStroke();
 }
 
-void draw(){
-   background(0);
-  //sun
-   fill(255,255,0);
-   ellipse(x,y,r,r);
-   
+void orbit(){ 
+  while(i<orbit_radius.length){
    strokeWeight(0.01);
    stroke(255,255,255);
    noFill();
-   ellipse(x,y,r+4,r+4);
-   
-   //mercury
-   fill(255,0,0);
-   ellipse(x+cos(jme+=0.050)*(r+3.85),y+sin(jme)*(r+3.05),0.3,0.3);
-   
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+8,r+8);
-   
-   //venus
-   fill(255,0,0);
-   ellipse(x+cos(jv+=0.035)*(r+7.6),y+sin(jv)*(r+7.6),0.8,0.8);
-   
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+10,r+10);
+   ellipse(x,y,orbit_radius[i],orbit_radius[i++]);
+  }
+}
 
-   //earth
-   fill(0,255,0);
-   ellipse(x+cos(je+=0.03)*(r+9.5),y+sin(je)*(r+9.5),1,1);
-   
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+16,r+16);
+void planet(){
+    j=0; // planet index
+    s=0; // speed index
+    a=0; // orbit radius index
+    p=0; // planet radius index
 
-   //mars
-   fill(255,0,0);
-   ellipse(x+cos(jm+=0.024)*(r+15.8),y+sin(jm)*(r+15.8),0.4,0.4);
-   
+    float[][] planets = 
+{{x+cos(jme+=speed[s++])*(orbit_radius[a]),y+sin(jme)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(jv+=speed[s++])*(orbit_radius[a]),y+sin(jv)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(je+=speed[s++])*(orbit_radius[a]),y+sin(je)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(jm+=speed[s++])*(orbit_radius[a]),y+sin(jm)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(ji+=speed[s++])*(orbit_radius[a]),y+sin(ji)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(js+=speed[s++])*(orbit_radius[a]),y+sin(js)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(ju+=speed[s++])*(orbit_radius[a]),y+sin(ju)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(jn+=speed[s++])*(orbit_radius[a]),y+sin(jn)*(orbit_radius[a++]),planet_radius[p++]},
+{x+cos(jp+=speed[s++])*(orbit_radius[a]),y+sin(jp)*(orbit_radius[a++]),planet_radius[p++]}}; //planets x,y,r
+
+  while(j<planets.length){
+    k=0; // planet setting index
+    
+    fill(0,0,255); // color
+    if(j<=3)fill(255,0,0); 
+    if(j==2)fill(0,255,0); 
+    
+    ellipse(planets[j][k++],planets[j][k++],planets[j][k],planets[j++][k]);
+  }
+}
+
+void dirt(){
    strokeWeight(5.01);
    stroke(155,155,155);
    noFill();
    ellipse(x,y,r+30,r+30);
+}
+
+void draw(){
+   i=0;
+   background(0);
    
+   //sun
    strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+52,r+52);
+   fill(255,255,0);
+   ellipse(x,y,r,r);
    
-   //jupiter
-   fill(150,150,150);
-   //background(0,0,0);
-   ellipse(x+cos(ji+=0.013)*(r+52),y+sin(ji)*(r+52),10.2,10.2);
+   orbit();
+   planet();
    
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+100,r+100);
-   
+   //mercury
+   //venus   
+   //earth
+   //mars
+   //jupiter  
    //saturn
-   fill(200,200,100);
-   ellipse(x+cos(js+=0.0096)*(r+100),y+sin(js)*(r+100),8.3,8.3);
-   
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+200,r+200);
-   
    //uranus
-   fill(0,0,200);
-   ellipse(x+cos(ju+=0.0068)*(r+200),y+sin(ju)*(r+200),3.3,3.3);
-   
-   strokeWeight(0.01);
-   stroke(255,255,255);
-   noFill();
-   ellipse(x,y,r+300,r+300);
-   
    //neptune
-   fill(0,0,255);
-   ellipse(x+cos(jn+=0.0054)*(r+300),y+sin(jn)*(r+300),3.2,3.2);
-   
-   //strokeWeight(0.01);
-   //stroke(255,255,255);
-   //noFill();
-   //ellipse(x,y,r+400,r+400);
-   
    //pluto
-   fill(255,0,0);
-   ellipse(x+cos(jp+=0.0046)*(r+400),y+sin(jp)*(r+400),0.1,0.1);
    
+   dirt();
   
 }
